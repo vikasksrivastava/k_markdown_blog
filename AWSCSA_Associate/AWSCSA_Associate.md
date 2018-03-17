@@ -13,6 +13,7 @@
     - [IAM Roles](#iam-roles)
   - [AWS Networking](#aws-networking)
     - [Typical VPC screen](#typical-vpc-screen)
+    - [VPC Routing Basics](#vpc-routing-basics)
     - [VPC Limits](#vpc-limits)
   - [Server-Based Compute Services](#server-based-compute-services)
   - [Server**less** Compute Services](#serverless-compute-services)
@@ -185,6 +186,22 @@ Now take a look at the picture belpw and see what the a dissection of VPC looks 
 Notice on the left the different networking constructs you have to work and play with :)
 
 ![](assets/markdown-img-paste-20180317174000405.png)
+
+
+### VPC Routing Basics
+
+Now lets take a look at a deeper level on the VPC Routing Basics. Internet  gateway , Subnets and the Routing table.
+
+`Internet Gateway` : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has built in Fault tolernace at the Amazon Networkign level.
+
+Again , you can only have **one Internet Gatewat attached a VPC**.
+Notice the attached `Internet Gateway` to the VPC in the picture below.
+
+![](assets/markdown-img-paste-20180317174555203.png)
+
+Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is mapped to the `Internet Gateway` for all **outbound internet traffic**.
+
+![](assets/markdown-img-paste-20180317174853412.png)
 
 ### VPC Limits
 
