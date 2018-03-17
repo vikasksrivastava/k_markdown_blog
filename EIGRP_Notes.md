@@ -11,7 +11,7 @@ Cisco added some of the features from link-state routing protocols to EIGRP whic
 - Vulnerable to loops.
 - Simple metric (hop count).
 
-![](.png) ![](assets/markdown-img-paste-20180316210705371.png)
+![k|20x20,10%](assets/markdown-img-paste-20180316210705371.png)
 
 ## Distance Vector Protocol 1
 
@@ -24,8 +24,6 @@ Cisco added **some of the features from link-state routing protocols to EIGRP** 
 > - EIGRP is **100% loop-free** and I'm going to show you why this is true.
 
 **EIGRP Protocol Number is 8**
-
-# TEST MESSAGE 2
 
 EIGRP runs **directly on top of the IP header**. If you look at the picture above you see we have a frame header (for example an Ethernet Frame), an IP Header (we are using IPv4) and inside the IP packet you'll find EIGRP.
 
@@ -69,4 +67,4 @@ Routing Protocol is "eigrp 100"
 R1#
 ```
 
-ssdasdsdyll `git commit` `git push` configuration file.
+Finally `git commit` `git push` configuration file.
