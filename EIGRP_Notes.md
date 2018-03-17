@@ -23,7 +23,7 @@ Cisco added **some of the features from link-state routing protocols to EIGRP** 
 
 **EIGRP Protocol Number is 8**
 
-# TEST MESSAGE
+# TEST MESSAGE 2
 
 EIGRP runs **directly on top of the IP header**. If you look at the picture above you see we have a frame header (for example an Ethernet Frame), an IP Header (we are using IPv4) and inside the IP packet you'll find EIGRP.
 
