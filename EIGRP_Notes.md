@@ -67,4 +67,4 @@ Routing Protocol is "eigrp 100"
 R1#
 ```
 
-ssdasdsdyll `_config.yml` configuration file.
+ssdasdsdyll `git commit` `git push` configuration file.
