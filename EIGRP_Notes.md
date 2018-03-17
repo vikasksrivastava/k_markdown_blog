@@ -13,6 +13,8 @@ Cisco added some of the features from link-state routing protocols to EIGRP whic
 
 ## Distance Vector Protocol 1
 
+ssdasdsdyll
+
 - Distance Vector is what the neighbor router has told it.
 
 Cisco added **some of the features from link-state routing protocols to EIGRP** which makes it far more advanced than a true distance vector routing protocol like RIP. This is why (probably the marketing department) calls **EIGRP an advanced distance vector or hybrid routing protocol**.
