@@ -13,7 +13,7 @@ Cisco added some of the features from link-state routing protocols to EIGRP whic
 
 ## Distance Vector Protocol 1
 
-ssdasdsdyll
+ssdasdsdyllDDS SDSD
 
 - Distance Vector is what the neighbor router has told it.
 
