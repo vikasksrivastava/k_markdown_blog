@@ -1,7 +1,7 @@
-# AWS Certified Solution Architech - Associate
+# AWS Certified Solution Architect - Associate
 
 <!-- TOC START min:1 max:3 link:true update:true -->
-- [AWS Certified Solution Architech - Associate](#aws-certified-solution-architech---associate)
+- [AWS Certified Solution Architect - Associate](#aws-certified-solution-architect---associate)
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
     - [AWS Account and Physical Organisation](#aws-account-and-physical-organisation)
@@ -11,8 +11,9 @@
     - [IAM Policy](#iam-policy)
     - [IAM groups](#iam-groups)
     - [IAM Roles](#iam-roles)
-  - [AWS Interfaces](#aws-interfaces)
   - [AWS Networking](#aws-networking)
+    - [Typical VPC screen](#typical-vpc-screen)
+    - [VPC Limits](#vpc-limits)
   - [Server-Based Compute Services](#server-based-compute-services)
   - [Server**less** Compute Services](#serverless-compute-services)
   - [Advanced Networking](#advanced-networking)
@@ -134,14 +135,65 @@ An `IAM Policy` is attached to an `IAM Role` which is then assigned to the `User
 
 ![](assets/markdown-img-paste-20180317165340821.png)
 
+Notice in the screenshot below , we have 3 different types of Roles:
 
+**`AWS Service Roles`** : Like EC2 accessing S3
+**`Role for Cross Account access`** : Allowing access for `DEV` IAM group to `PROD`
+**`Role for Identity Provider Access`** : Federation and SAML , Facebook, Google.
+
+
+
+![](assets/markdown-img-paste-20180317165948959.png)
+
+#### Security Token Service
+
+This a temporary credetials which allows access to the AWS Resource.
+So in the example of `EC2` accessing `S3` and `STS` is generated for the EC2 instance.
+
+The benefit is that the **credetials are not required to be embedded** in the application.
+
+STS times out / expires after certain time period.
+
+#### IAM API Keys
+
+These are the API Keys like openstack which enables programmatic access to the AWS APIs.
 
 -------
-
-## AWS Interfaces
--------
-
 ## AWS Networking
+
+> VPC `Virtual Private Cloud` is the networking is architected in the cloud.
+
+Now lets take a deeper dive into VPC ad look it under the hood.
+
+`VPC` spans `Avalaibility Zones` and `Multiple Datacenters`.
+
+![](assets/markdown-img-paste-20180317171726859.png)
+
+Now take a look at the picture belpw and see what the a dissection of VPC looks like internally.
+
+ - Notice how the VPC spans the two different AZs in the picture.
+ - Notice the **private subnets** e.g `172.16.0.0` spanning two different AZs. This enables you to design and put your servers in **different failure domains enabling High Avalaibility**
+ - You can define custom `CIDR` in each subnet.
+ - You can create routes between the Subnets.
+ - You can also have subnet level firewalls and access rules.
+
+![](assets/markdown-img-paste-20180317172222633.png)
+
+
+### Typical VPC screen
+
+Notice on the left the different networking constructs you have to work and play with :)
+
+![](assets/markdown-img-paste-20180317174000405.png)
+
+### VPC Limits
+
+- 5 VPCs per region (you can have this increased)
+- 5 Internet Gateways per region , this is equal the VPC limit as **one VPC can only have one internet gateway**.
+- 50 VPN Connections per region.
+
+
+
 -------
 
 ## Server-Based Compute Services
