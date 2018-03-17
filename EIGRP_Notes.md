@@ -11,7 +11,7 @@ Cisco added some of the features from link-state routing protocols to EIGRP whic
 - Vulnerable to loops.
 - Simple metric (hop count).
 
-## Distance Vector Protocol
+## Distance Vector Protocol 1
 
 - Distance Vector is what the neighbor router has told it.
 
