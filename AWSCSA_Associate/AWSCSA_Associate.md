@@ -190,9 +190,11 @@ Notice on the left the different networking constructs you have to work and play
 
 ### VPC Routing Basics
 
-Now lets take a look at a deeper level on the VPC Routing Basics. Internet  gateway , Subnets and the Routing table.
+Now lets take a look at a deeper level on the VPC Routing Basics the `Internet  gateway`, `Subnets` and the `Routing table`.
 
-`Internet Gateway` : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has built in Fault tolernace at the Amazon Networkign level.
+`Internet Gateway` : The is a default internet gateway connected to the default VPC. It is horizontally scales in the backend and there is no need to manage the bandwidth and capacity of the same. It has **built in Fault tolernace at the Amazon Networking level**.
+
+> We dont have to manage `Internet Gateways` bandwidth, AWS Does that for us.
 
 Again , you can only have **one Internet Gatewat attached a VPC**.
 Notice the attached `Internet Gateway` to the VPC in the picture below.
@@ -203,13 +205,38 @@ Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is m
 
 ![](assets/markdown-img-paste-20180317174853412.png)
 
+`Subnets`: After creating VPC, you can create o**ne or more subnets** in each `Availabilty Zone`. Each **subet much reside in one Availaibilty Zone** and **cannot span** different `Availability Zone`.
+
+> So **VPC spans Availabilty Zones** but **Subnet are contained in one Availabilty Zone**.
+
+IMPORTANT NOTE : `Subnets` are associated to `Route Tables` and the `Route Table` may or may not be attached to an `Internet Gateway`
+
+The following association is show in the picture below .
+
+`Subnet ---> Route Table ---> Internet Gateway`
+
+![](assets/markdown-img-paste-20180318151727852.png)
+
+`Explicit Association` is when you move the route tables from default to the one which you created.
+
+### VPC Security
+
+**`Network ACLs`** `allow` or `deny` traffic at the subnet level and are stateless, which means that the return traffic had to be `ALLOWED` for traffic for both direction.
+
+This follows at the Cisco ACL `access-list` order charecteristics.
+
+**`Security Groups`** Just like Openstack Security groups but they are **statefull** . Security group **only supports** `allow` rules.
+
+
+
+
+
+
 ### VPC Limits
 
 - 5 VPCs per region (you can have this increased)
 - 5 Internet Gateways per region , this is equal the VPC limit as **one VPC can only have one internet gateway**.
 - 50 VPN Connections per region.
-
-
 
 
 
