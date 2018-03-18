@@ -211,6 +211,8 @@ Now take a look at the `Route Table` in the picture below and how `0.0.0.0` is m
 
 
 
+
+
 -------
 
 ## Server-Based Compute Services
