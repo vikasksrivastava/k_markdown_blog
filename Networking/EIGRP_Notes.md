@@ -47,14 +47,14 @@ EIGRP Protocol Number is `88`, EIGRP runs **directly on top of the IP header**. 
 
 EIGRP uses **RTP (Reliable Transport Protocol)** and its function is to deliver EIGRP packets between neighbors in a reliable and ordered way. Reliability means that there is **acknowledgement for an operation , which makes it a reliable protocol**.
 
-EIGRP has 3 tables :
+**EIGRP has 3 tables** :
 
 `Neighbor Table` `Topology Table` `Global Routing Table`
 
 
 `Hello` packets are not acknowledged since the EIGRP used a holdown time. It can use **Multicast or Unicast** for the same .  Since sending "individual" hellos to each of the routers, hence multicast is more efficient.
 
-Different types of EIGRP Packets:
+**Different types of EIGRP Packets**:
 
 `Hello`:  These are used for neighbor discovery .
 `Updates`: Updates are for sending routing information updates .

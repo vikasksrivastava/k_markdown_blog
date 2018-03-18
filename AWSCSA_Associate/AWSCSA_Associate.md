@@ -51,6 +51,7 @@ This represents how how you manage multiple services and account managment.
 At a very high level AWS can be broken down into two main blocks
 
 **`AWS Regions`** : These are grouping of independenly separated datacenters in a specific geographic regions know as `Availabilty Zones`.
+
 **`AWS Edge Location`** : It is a Datacenter whic does not contain any AWS Services ; Instead it is used to deliver contents to parts of the world. `CloudFront`
 
 > Not All AWS Services are availaible globally , one of the example of a Global Service is the `IAM`
