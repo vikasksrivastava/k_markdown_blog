@@ -1,6 +1,6 @@
 # AWS Certified Solution Architect - Associate
 
-<!-- TOC START min:1 max:3 link:true update:true -->
+<!-- TOC START min:1 max:5 link:true update:true -->
 - [AWS Certified Solution Architect - Associate](#aws-certified-solution-architect---associate)
   - [Introduction](#introduction)
   - [AWS Organisation](#aws-organisation)
@@ -11,9 +11,15 @@
     - [IAM Policy](#iam-policy)
     - [IAM groups](#iam-groups)
     - [IAM Roles](#iam-roles)
+      - [Role Assumption](#role-assumption)
+      - [Security Token Service](#security-token-service)
+      - [IAM API Keys](#iam-api-keys)
   - [AWS Networking](#aws-networking)
     - [Typical VPC screen](#typical-vpc-screen)
     - [VPC Routing Basics](#vpc-routing-basics)
+    - [VPC Security](#vpc-security)
+    - [VPC Workflow](#vpc-workflow)
+      - [Create the VPC](#create-the-vpc)
     - [VPC Limits](#vpc-limits)
   - [Server-Based Compute Services](#server-based-compute-services)
   - [Server**less** Compute Services](#serverless-compute-services)
@@ -24,6 +30,8 @@
   - [Hybrid Environments](#hybrid-environments)
 
 <!-- TOC END -->
+
+
 
 ## Introduction
 
@@ -227,16 +235,33 @@ This follows at the Cisco ACL `access-list` order charecteristics.
 
 **`Security Groups`** Just like Openstack Security groups but they are **statefull** . Security group **only supports** `allow` rules.
 
+### VPC Workflow
 
+#### Create the VPC
 
-
-
+1. Create the VPC and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
+![](assets/markdown-img-paste-20180318160426965.png)
+2. Create the `Internet Gateway`
+![](assets/markdown-img-paste-20180318160902338.png)
+3. Attach the `Internet Gateway` to the VPC
+![](assets/markdown-img-paste-20180318161028276.png)
+4. Next we will create **two different** `Route Tables`, one which is **connected** to the `Internet Gateway` and the other **which is not** connected.
+![](assets/markdown-img-paste-20180318161246639.png)
+Now **connect** the `Route Table` created above to the `Internet Gateway`. If you leave the `Route Table` not connected to the `Internet Gateway` it becomes a private route table.
+![](assets/markdown-img-paste-20180318161517281.png)
+5. Now Create a `Subnet`. Notice that you have to specifically define the `Availabilty Zone` (a subnet can only span an AZ) and the `CIDR` block range which is within the range of the VPC.
+![](assets/markdown-img-paste-20180318162016693.png)
+6. Now you can create the Network ACL which is a straight forward process.
+![](assets/markdown-img-paste-20180318162441801.png)
 
 ### VPC Limits
 
 - 5 VPCs per region (you can have this increased)
 - 5 Internet Gateways per region , this is equal the VPC limit as **one VPC can only have one internet gateway**.
 - 50 VPN Connections per region.
+
+
+
 
 
 
