@@ -33,7 +33,11 @@
     - [EFS Elastic File System](#efs-elastic-file-system)
   - [Server**less** Compute Services (AWS Lambda)](#serverless-compute-services-aws-lambda)
     - [When do should you run Lambda](#when-do-should-you-run-lambda)
-  - [Advanced Networking](#advanced-networking)
+  - [Quick Detour](#quick-detour)
+    - [CloudWatch (Monitoring)](#cloudwatch-monitoring)
+    - [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
+    - [SNS Notification Service](#sns-notification-service)
+- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
   - [Storage Services](#storage-services)
@@ -401,20 +405,28 @@ Generally you will run Lambda when you want a function to run in response to an 
 Example Lambda Use :
 `Upload Object to S3 --> S3 Event --> Triggers a Lambda Function`
 
+## Quick Detour
 
+### CloudWatch (Monitoring)
 
+- Used to monitor AWS Services such as EC2
+- Provides centralised monitoring and performance mentrics.
+- CloudWatch Alarms can be used a triggers.
 
+### CloudTrail (API Logging Service)
 
+- Logs all API calls.
 
+### SNS Notification Service
 
-
+Automates the process of sending notification email or text . SNS is integrated in many AWS services so it is easy to use it.
 
 
 
 
 -------
 
-## Advanced Networking
+# Advanced Networking (START HERE IN LINUXACADEMY)
 -------
 
 ## Advanced VPC Networking
