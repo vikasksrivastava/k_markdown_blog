@@ -19,10 +19,20 @@
     - [VPC Routing Basics](#vpc-routing-basics)
     - [VPC Security](#vpc-security)
     - [VPC Workflow](#vpc-workflow)
-      - [Create the VPC](#create-the-vpc)
     - [VPC Limits](#vpc-limits)
   - [Server-Based Compute Services](#server-based-compute-services)
-  - [Server**less** Compute Services](#serverless-compute-services)
+    - [EC2 Limits](#ec2-limits)
+    - [EC2 Purchasing Options](#ec2-purchasing-options)
+    - [Linux AMI Virtualisation Type :](#linux-ami-virtualisation-type-)
+    - [EC2 Instance Type :](#ec2-instance-type-)
+    - [EC2 Instance Metadata](#ec2-instance-metadata)
+    - [EC2 Instance Storage types](#ec2-instance-storage-types)
+    - [Different EBS types](#different-ebs-types)
+    - [EBS snapshot](#ebs-snapshot)
+    - [Placement groups](#placement-groups)
+    - [EFS Elastic File System](#efs-elastic-file-system)
+  - [Server**less** Compute Services (AWS Lambda)](#serverless-compute-services-aws-lambda)
+    - [When do should you run Lambda](#when-do-should-you-run-lambda)
   - [Advanced Networking](#advanced-networking)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
@@ -227,6 +237,11 @@ The following association is show in the picture below .
 
 `Explicit Association` is when you move the route tables from default to the one which you created.
 
+**High Level AWS Networking Internal Architecture**
+
+![](assets/markdown-img-paste-20180318212412969.png)
+
+
 ### VPC Security
 
 **`Network ACLs`** `allow` or `deny` traffic at the subnet level and are stateless, which means that the return traffic had to be `ALLOWED` for traffic for both direction.
@@ -237,9 +252,7 @@ This follows at the Cisco ACL `access-list` order charecteristics.
 
 ### VPC Workflow
 
-#### Create the VPC
-
-1. Create the VPC and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
+1. Create the `VPC` and give it a `CIDR` Block range. **Notice** that you can also define `IPv6` CIDR ranges. When `Tenancy`  is set to dedicate you are **not sharing** your servers with the other users.
 ![](assets/markdown-img-paste-20180318160426965.png)
 2. Create the `Internet Gateway`
 ![](assets/markdown-img-paste-20180318160902338.png)
@@ -270,7 +283,135 @@ Now **connect** the `Route Table` created above to the `Internet Gateway`. If yo
 ## Server-Based Compute Services
 -------
 
-## Server**less** Compute Services
+### EC2 Limits
+
+Take a look at the default EC2 Limits :
+
+![](assets/markdown-img-paste-20180318200924374.png)
+
+### EC2 Purchasing Options
+
+
+![](assets/markdown-img-paste-20180318202820909.png)
+
+Workflow : Choose `AMI` --> Choose `Instance Type`
+
+**There are 3 different types of EC2 Instances :**
+
+**`Ondemand`** Most expensive , run and destroy whenever you like. You care billed as per per `second` or per `hour`. **These differ based on Images** too , not all images support per second basis. A`mazon Linux` or `Ubuntu` offer per second pricing.
+
+> Not that if the image is stopped  you are not charged for the same.
+
+**`Reserved`** Allows you purchase instance for `1` or `3` years and you get **discount** becuause of the commitment. But here you pay the whole amount regardless of how much you use it. You can pay upfront partial partial and no upfornt
+
+**`Spot`** In this case prices of instances fluctuate based on what AWS considers is **unused capacity in their datacenters**. In this case you the billing happens like the `Ondemand` instance.
+
+And instance is provisioned for you **when your bid price is less than or equal to the instance price**. If the **AWS's price increases your instance is terminated**.
+
+If the instance is **terminated by AWS** you **dont pay for that slot** of duration (1 minute or 1 hour) . If **you delete it**, **you pay** for it.
+
+### Linux AMI Virtualisation Type :
+
+**`HVM`**  **Hardware Virtual Machine** , Conside this like Intel VTx/d technology by which guests can take advantage of virtualisation feature supported by the CPU. Proved enhanced networking and GPU processing to the VM.
+
+**`PV`**  **Paravirtual** AMIs Guests could run on Hardware which does not have HVM support. cannot take advantage of GPU / Advanced networking.
+
+> You will see most AMIs are using `HVM`
+
+### EC2 Instance Type :
+
+Has the following virtual hardware components, you have to choose the right instance type **based on your application requirement** :
+
+`vCPU`
+`RAM`
+`Storage Options `
+`Network Performance`
+
+Notice in the picture below the above characteristics.
+![](assets/markdown-img-paste-20180318203911238.png)
+
+Different Instance types
+
+![](assets/markdown-img-paste-20180318204119218.png)
+
+### EC2 Instance Metadata
+
+`http://169.254.169.254/lates/user-data` Show the data which the user provided for boottraping
+
+`http://169.254.169.254/lates/user-data` Displays AMI, Instance Type etc.
+
+### EC2 Instance Storage types
+
+EBS Elastic Block Store ,
+
+ - EBS Volumes are persistent and can stay even after instance deletion, unlike Instance Store.
+ - Can **only be attached to one instance** a time.
+ - EBC can be backed up into snapshots. These snapshot can later be restored to EBS volume.
+ - EBS Volume measures performance in IOPS , AWS one IOPS is 256KB chunk (input or output)
+ - Even with provision IOPs you may not get the performance you want, you may want to choose an instance type which is EBS optimized instance type.
+ - New EBS volume no longer need to be pre-warmed. Maximum performance is received as soon as the EBS volume is spawned.
+ - Now with the above point note that if you created a volume from a snapshot you still need to warm-up  (read all the storage blocks)/ read otherwise the access could be slow.
+
+
+### Different EBS types
+
+- `General Purpose` (1GiB - 16TiB), best used for Dev and Test environment. This allows 3 IOPS/GiB (so size of the disk has direct relation with the IOPS) but is burstable upto 3000 IOPS.
+- `Provisioned IOPS SSD` (4GiB - 16TiB) , Used for mission critical applications. This performs at the provisioned IOPS level and can go upto 20,000 IOPS.
+- `Magnetic` Rarely used , slow .
+
+Now there is another type of store different than EBS :
+
+- `Instance Store` volumes are ephemeral data. The data on the volume only exists till the life of the instance. If the instance is stopped or shutdown the data will be lost.
+If the instance is rebooted the data is retained.
+
+### EBS snapshot
+
+You can take a snapshot to recreate the volume. Snapshots are stored in S3. You are only charged for the difference between the snapshots.
+
+### Placement groups
+
+> Instances must have **10G connection** type to be able to use Placement Groups.
+
+When there is a requirement to keep the instances as close possible to other instances a placement group is used. Like `Affinity Groups` in Openstack.
+
+Instances not created in a Placement group cannot be moved into a placement group.
+**A placement group cannot span AZs**.
+
+### EFS Elastic File System
+
+Conside this like NFS , this can be shared between multiple EC2 instances.
+
+-------
+
+## Server**less** Compute Services (AWS Lambda)
+
+You do not need EC2 servers (Serverless) to run your application , you can directly run your programs here !
+
+A picture says a thousand words :
+
+![](assets/markdown-img-paste-20180318214149491.png)
+
+
+
+### When do should you run Lambda
+> You are only billed for the duration your code is running.
+
+Generally you will run Lambda when you want a function to run in response to an event.
+
+Example Lambda Use :
+`Upload Object to S3 --> S3 Event --> Triggers a Lambda Function`
+
+
+
+
+
+
+
+
+
+
+
+
 -------
 
 ## Advanced Networking
