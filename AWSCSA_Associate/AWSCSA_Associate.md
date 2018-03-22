@@ -36,7 +36,9 @@
     - [CloudWatch (Monitoring)](#cloudwatch-monitoring)
     - [CloudTrail (API Logging Service)](#cloudtrail-api-logging-service)
     - [SNS Notification Service](#sns-notification-service)
-- [Advanced Networking (START HERE IN LINUXACADEMY)](#advanced-networking-start-here-in-linuxacademy)
+  - [Advanced Networking](#advanced-networking)
+  - [Workflow](#workflow)
+    - [Service Traffic to and from Private Web Servers](#service-traffic-to-and-from-private-web-servers)
   - [Advanced VPC Networking](#advanced-vpc-networking)
   - [Network Troubleshooting](#network-troubleshooting)
   - [Storage Services](#storage-services)
@@ -431,7 +433,76 @@ If the instance is rebooted the data is retained.
 
 -------
 
-# Advanced Networking (START HERE IN LINUXACADEMY)
+## Advanced Networking
+
+###
+
+If you notice in the picture below , we have now added a load balancer and an autoscaling group which now spans two vPCs .
+
+![](assets/markdown-img-paste-20180322075845612.png)
+
+**`Elastic Loadbalancer`** : EC2 Service which loadbalances traffic to multiple EC2 instances across multiple `Availabilty Zones`.
+
+- Also `Elastic Loadbalancer` should also be paired with `Auto Scaling Group` for High Availabilty.
+
+- There could also be an Internal Elastic Loadbalancer for loadbalancing traffic internally within private subnets.
+- Elastic Loadbalancer can also stop sending traffic to a non responding instance based on `Health Checks`.
+- It can an also do the SSL Encryption and Decryption at its level , instead of these certificates installed at the instance level.
+
+**`Auto Scaling Group`** :  Automates the process of increasing or decreasing the amount of provised on-demand instances availaible for your application.
+
+ - Auto Scaling can increase or decrease the amount of instances based on `CloudWatch` metrics.
+
+Auto Scaling has two main components :
+
+- `Launch Configuration` : The template of the instance which will be launched.
+- `Auto Scaling Groups` : All the rules and setting which defines the trigger for when the instance will be created or deleted.
+      - Number of `MIN` and `MAX` instances allowed.
+      - VPCs and AZs to launch instances into.
+
+
+> For an architecture to be considered highly availaible and fault tolerant it MUST have an ELB service traffic to an Auto Scaling Group with a minimum of two instances in separate AZs.
+
+## Workflow
+
+It makes sense to create the Target Groups first and then the Load Balancers
+
+> In the example below we are creating the following scenario and based on the content (pictures or videos) in the URL and route based on the same.
+
+![](assets/markdown-img-paste-20180322112423269.png)
+
+
+![](assets/markdown-img-paste-20180322112318970.png)
+
+1. Create a Target Group
+![](assets/markdown-img-paste-20180322132805821.png)
+2. Add Target (instances) to the target group
+![](assets/markdown-img-paste-2018032213302429.png)
+![](assets/markdown-img-paste-20180322133049555.png)
+3. Configure the Load balancer
+![](assets/markdown-img-paste-2018032213324375.png)
+4. Add the Target group created in step 1
+![](assets/markdown-img-paste-20180322133338478.png)
+5. Note that we have now the DNS name of the loadbalancer which can be accessed to access the service:
+![](assets/markdown-img-paste-20180322133500210.png)
+6. Additionaly when the Load balancer is created we can edit the rules for more advanced rules and routing:
+![](assets/markdown-img-paste-20180322134148144.png)
+Example is , that any time the path contains *pictures* we can forward it to the pictures target group , similary another group can be created for videos:
+![](assets/markdown-img-paste-20180322134322594.png)
+
+### Service Traffic to and from Private Web Servers
+
+**`Bastion Host`**: A terminal server for getting into instance in the private subnet.
+
+**`NAT Gateway`** : For providing internet access to the instances in the private subnet.
+`NAT Gateway` is without an actual instance doing the NATing and `NAT Instances` uses an actual instance.
+
+
+
+
+
+
+
 -------
 
 ## Advanced VPC Networking
